@@ -1,7 +1,12 @@
 import React from "react";
 import Account from "../components/Account";
+import Button from "../components/Button";
 
 const User = () => {
+  const handleEditName = () => {
+    console.log("Edit name action");
+  };
+
   return (
     <main className="main bg-dark">
       {/* TODO Composant div "header" ???? */}
@@ -11,7 +16,12 @@ const User = () => {
           <br />
           Tony Jarvis!
         </h1>
-        <button class="edit-button">Edit Name</button>
+        {/* <button class="edit-button">Edit Name</button> */}
+        <Button
+          className="edit-button"
+          onClick={handleEditName}
+          label="Edit Name"
+        />
       </div>
 
       <h2 class="sr-only">Accounts</h2>
