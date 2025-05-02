@@ -1,11 +1,14 @@
 import React from "react";
 import Account from "../components/Account";
 import Button from "../components/Button";
+import { useSelector } from "react-redux";
 
 const User = () => {
   const handleEditName = () => {
     console.log("Edit name action");
   };
+
+  const userDetails = useSelector((state) => state.user.userDetails);
 
   return (
     <main className="main bg-dark">
@@ -14,7 +17,11 @@ const User = () => {
         <h1>
           Welcome back
           <br />
-          Tony Jarvis!
+          {userDetails && (
+            <>
+              {userDetails.firstName} {userDetails.lastName}!
+            </>
+          )}
         </h1>
         {/* <button class="edit-button">Edit Name</button> */}
         <Button

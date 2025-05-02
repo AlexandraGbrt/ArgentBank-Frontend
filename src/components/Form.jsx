@@ -1,27 +1,32 @@
-import React from "react";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { loginUser } from "../redux/features/userSlice";
 import Button from "./Button";
 
 const Form = () => {
-  // Définition des states
-  // const [username, setUsername] = useState("");
-  // const [password, setPassword] = useState("");
-  // const [rememberMe, setRememberMe] = useState(false);
+  const dispatch = useDispatch();
+  const error = useSelector((state) => state.user.error); // afficher une erreur
+  const [email, setEmail] = useState(""); // useState pour gérer/suivre les valeurs du form
+  const [password, setPassword] = useState("");
+  const [rememberMe, setRememberMe] = useState(false);
 
-  // Gérer les clics du button
-  const handleSignIn = () => {
-    console.log("User signed in");
+  // clic sur le bouton
+  const handleSignIn = (e) => {
+    e.preventDefault(); // empêche le rechargement
+
+    dispatch(loginUser({ email, password })); // appelle l'action async pour connecter
   };
 
   return (
-    <form onSubmit={""}>
+    <form onSubmit={handleSignIn}>
       <div className="input-wrapper">
         <label htmlFor="username">Username</label>
         <input
           type="text"
           id="username"
           name="username"
-          // value={username}
-          onChange={""}
+          value={email}
+          onChange={(e) => setEmail(e.target.value)} // onChange met a jour l'état des champs
         />
       </div>
       <div className="input-wrapper">
@@ -30,27 +35,21 @@ const Form = () => {
           type="password"
           id="password"
           name="password"
-          // value={password}
-          onChange={""}
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
         />
       </div>
       <div className="input-remember">
         <input
           type="checkbox"
           id="remember-me"
-          // checked={rememberMe}
-          onChange={""}
+          checked={rememberMe}
+          onChange={() => setRememberMe(!rememberMe)}
         />
         <label htmlFor="remember-me">Remember me</label>
       </div>
-      {/* <button type="submit" className="sign-in-button">
-        Sign In
-      </button> */}
-      <Button
-        className="sign-in-button"
-        onClick={handleSignIn}
-        label="Sign In"
-      />
+      <Button className="sign-in-button" label="Sign In" />
+      {error && <p style={{ color: "red" }}>{error}</p>}
     </form>
   );
 };
