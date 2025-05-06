@@ -1,15 +1,21 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/img/argentBankLogo.webp";
+
+// REDUX
 import { useDispatch, useSelector } from "react-redux"; // Afficher le nom utilisateur venant de redux
-import { logout } from "../redux/features/userSlice"; // Importez l'action de déconnexion
+import { logout } from "../redux/slice/userSlice"; // Importez l'action de déconnexion
 
 const NavBar = () => {
+  let navigate = useNavigate();
+
+  // Vérifie si l'utilisateur est authentifié
   const userDetails = useSelector((state) => state.user.userDetails);
   const dispatch = useDispatch();
 
   const handleLogout = () => {
     dispatch(logout()); // Déclencher la déconnexion
+    navigate("/login"); // Redirige vers la page login
   };
 
   return (
@@ -22,18 +28,42 @@ const NavBar = () => {
         />
         <h1 className="sr-only">Argent Bank</h1>
       </Link>
+
       <div>
         {/* Affiche le nom de l'utilisateur ou le lien de déconnexion */}
-        <Link className="main-nav-item" to={userDetails ? "#" : "/login"}>
+
+        {
+          userDetails ? (
+            <>
+              {/* <Link className="main-nav-item" to=""> 
           <i className="fa fa-user-circle"></i>
           {userDetails ? "Sign Out" : "Sign In"}
-        </Link>
-        {userDetails && (
-          <span onClick={handleLogout}>
-            <i className="fa-solid fa-right-from-bracket"></i>{" "}
-            {/* Déconnexion */}
-          </span>
-        )}
+          {userDetails.firstName}
+        </Link> */}
+
+              <Link className="main-nav-item" to="/user">
+                <i className="fa fa-user-circle"></i>
+                {userDetails.firstName}
+              </Link>
+              <Link className="main-nav-item" onClick={handleLogout}>
+                <i className="fa fa-sign-out"></i>
+                Sign Out
+              </Link>
+            </>
+          ) : (
+            // Affiche le lien de connexion si l'utilisateur n'est pas authentifié
+            <Link to="/login" className="main-nav-item">
+              <i className="fa fa-user-circle"></i>
+              Sign In
+            </Link>
+          )
+
+          // {userDetails && (
+          //   <span onClick={handleLogout}>
+          //     <i className="fa-solid fa-right-from-bracket"></i>{" "}
+          //   </span>
+          // )}
+        }
       </div>
     </nav>
   );

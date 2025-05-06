@@ -1,30 +1,52 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router";
 import { useDispatch, useSelector } from "react-redux";
-import { loginUser } from "../redux/features/userSlice";
+import { loginUser, getUserProfile } from "../redux/slice/userSlice";
 import Button from "./Button";
 
 const Form = () => {
-  const dispatch = useDispatch();
-  const error = useSelector((state) => state.user.error); // afficher une erreur
   const [email, setEmail] = useState(""); // useState pour gérer/suivre les valeurs du form
   const [password, setPassword] = useState("");
-  const [rememberMe, setRememberMe] = useState(false);
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const errorMsg = useSelector((state) => state.user.error); // afficher une erreur
 
   // clic sur le bouton
-  const handleSignIn = (e) => {
-    e.preventDefault(); // empêche le rechargement
+  const handleSignIn = async (e) => {
+    e.preventDefault();
+    // console.log("Form submitted");
 
-    dispatch(loginUser({ email, password })); // appelle l'action async pour connecter
+    if (email === "" || password === "") {
+      alert("Email and password are required");
+      return;
+    }
+
+    try {
+      const resultAction = await dispatch(loginUser({ email, password }));
+
+      if (loginUser.fulfilled.match(resultAction)) {
+        localStorage.setItem("token", resultAction.payload.token); // Sauvegarder le token
+
+        await dispatch(getUserProfile()); // Charge les informations utilisateur
+
+        navigate("/user"); // redirection
+      } else {
+        alert("Email or password incorrect");
+      }
+    } catch (error) {
+      error("error occurred during login");
+    }
   };
 
   return (
     <form onSubmit={handleSignIn}>
       <div className="input-wrapper">
-        <label htmlFor="username">Username</label>
+        <label htmlFor="email">Email</label>
         <input
-          type="text"
-          id="username"
-          name="username"
+          type="email"
+          id="email"
+          name="email"
           value={email}
           onChange={(e) => setEmail(e.target.value)} // onChange met a jour l'état des champs
         />
@@ -40,16 +62,13 @@ const Form = () => {
         />
       </div>
       <div className="input-remember">
-        <input
-          type="checkbox"
-          id="remember-me"
-          checked={rememberMe}
-          onChange={() => setRememberMe(!rememberMe)}
-        />
+        <input type="checkbox" id="remember-me" />
         <label htmlFor="remember-me">Remember me</label>
       </div>
       <Button className="sign-in-button" label="Sign In" />
-      {error && <p style={{ color: "red" }}>{error}</p>}
+      {errorMsg && (
+        <p style={{ color: "red" }}>{errorMsg || "Erreur de connexion"}</p>
+      )}
     </form>
   );
 };

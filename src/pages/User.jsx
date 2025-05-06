@@ -13,15 +13,11 @@ const User = () => {
   return (
     <main className="main bg-dark">
       {/* TODO Composant div "header" ???? */}
-      <div class="header">
+      <div className="header">
         <h1>
           Welcome back
           <br />
-          {userDetails && (
-            <>
-              {userDetails.firstName} {userDetails.lastName}!
-            </>
-          )}
+          {userDetails.firstName} {userDetails.lastName} !
         </h1>
         {/* <button class="edit-button">Edit Name</button> */}
         <Button
@@ -31,7 +27,7 @@ const User = () => {
         />
       </div>
 
-      <h2 class="sr-only">Accounts</h2>
+      <h2 className="sr-only">Accounts</h2>
 
       <Account
         title="Argent Bank Checking (x8349)"

@@ -1,14 +1,12 @@
 // Combine tous les reducers
 
-
 import { combineReducers } from 'redux';
-import userSlice from './features/userSlice'; // Importez votre reducer d'utilisateur
-import transactionSlice from './features/transactionSlice'; // Importez votre reducer de transactions
+import userSlice from './slice/userSlice';
+
 
 // Combinez tous les reducers ici
 const rootReducer = combineReducers({
-    user: userSlice,                   // État lié à l'utilisateur
-    transactions: transactionSlice,     // État lié aux transactions
+    user: userSlice,  // État lié à l'utilisateur
 });
 
 export default rootReducer;
