@@ -1,20 +1,21 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
-import logo from "../assets/img/argentBankLogo.webp";
+import logo from "../../assets/img/argentBankLogo.webp";
 
 // REDUX
 import { useDispatch, useSelector } from "react-redux"; // Afficher le nom utilisateur venant de redux
-import { logout } from "../redux/slice/userSlice"; // Importez l'action de déconnexion
+import { logout } from "../../redux/slice/userSlice"; // Importez l'action de déconnexion
 
 const NavBar = () => {
-  let navigate = useNavigate();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   // Vérifie si l'utilisateur est authentifié
   const userDetails = useSelector((state) => state.user.userDetails);
-  const dispatch = useDispatch();
 
   const handleLogout = () => {
     dispatch(logout()); // Déclencher la déconnexion
+
     navigate("/login"); // Redirige vers la page login
   };
 

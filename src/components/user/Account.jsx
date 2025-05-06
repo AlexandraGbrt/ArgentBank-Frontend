@@ -1,5 +1,5 @@
 import React from "react";
-import Button from "./Button";
+import Button from "../Button";
 
 function Account({ title, amount, description }) {
   const handleViewTransactions = () => {

@@ -1,11 +1,11 @@
 import React from "react";
-import Hero from "../components/Hero";
-import Features from "../components/Features";
+import Banner from "../components/home/Banner";
+import Features from "../components/home/Features";
 
 const Home = () => {
   return (
     <main>
-      <Hero />
+      <Banner />
       <Features />
     </main>
   );

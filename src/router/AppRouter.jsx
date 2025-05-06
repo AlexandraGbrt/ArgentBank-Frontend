@@ -4,8 +4,8 @@ import Home from "../pages/Home";
 import Login from "../pages/Login";
 import User from "../pages/User";
 // import Transactions from "../pages/Transactions";
-import Navbar from "../components/Navbar";
-import Footer from "../components/Footer";
+import Navbar from "../components/layout/Navbar";
+import Footer from "../components/layout/Footer";
 
 const AppRouter = () => {
   return (

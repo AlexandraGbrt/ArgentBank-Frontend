@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router";
+import Button from "../Button";
+
+// REDUX
 import { useDispatch, useSelector } from "react-redux";
-import { loginUser, getUserProfile } from "../redux/slice/userSlice";
-import Button from "./Button";
+import { loginUser, getUserProfile } from "../../redux/slice/userSlice";
 
 const Form = () => {
   const [email, setEmail] = useState(""); // useState pour gérer/suivre les valeurs du form
@@ -13,7 +15,7 @@ const Form = () => {
   const errorMsg = useSelector((state) => state.user.error); // afficher une erreur
 
   // clic sur le bouton
-  const handleSignIn = async (e) => {
+  const handleLogIn = async (e) => {
     e.preventDefault();
     // console.log("Form submitted");
 
@@ -40,7 +42,7 @@ const Form = () => {
   };
 
   return (
-    <form onSubmit={handleSignIn}>
+    <form onSubmit={handleLogIn}>
       <div className="input-wrapper">
         <label htmlFor="email">Email</label>
         <input
