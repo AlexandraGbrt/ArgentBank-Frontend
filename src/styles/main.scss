@@ -4,8 +4,8 @@
 @use "./components/features";
 @use "./components/form";
 @use "./components/hero";
-@use "./components/navbar";
 
+@use "./layout/navbar";
 @use "./layout/footer";
 
 @use "./pages/login";

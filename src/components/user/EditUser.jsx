@@ -39,10 +39,10 @@ const EditUser = ({ setIsEditing }) => {
 
   return (
     <>
-      <div className="editUser">
+      <div className="edit-user">
         <h2>Edit user info</h2>
-        <form className="field">
-          <div className="editField">
+        <form className="edit-form">
+          <div className="edit-field">
             <label htmlFor="username">User name : </label>
             <input
               type="text"
@@ -54,34 +54,35 @@ const EditUser = ({ setIsEditing }) => {
             />
           </div>
           {/* {error} */}
+
+          <div className="edit-field">
+            <label htmlFor="firstname">First name : </label>
+            <input
+              type="text"
+              id="firstname"
+              name="firstname"
+              value={userDetails?.firstName}
+              readOnly
+              disabled
+            />
+          </div>
+          <div className="edit-field">
+            <label htmlFor="lastname">Last name : </label>
+            <input
+              type="text"
+              id="lastname"
+              name="lastname"
+              value={userDetails?.lastName}
+              readOnly
+              disabled
+            />
+          </div>
         </form>
-        <div className="editField">
-          <label htmlFor="firstname">First name : </label>
-          <input
-            type="text"
-            id="firstname"
-            name="firstname"
-            value={userDetails?.firstName}
-            readOnly
-            disabled
-          />
-        </div>
-        <div className="editField">
-          <label htmlFor="lastname">Last name : </label>
-          <input
-            type="text"
-            id="lastname"
-            name="lastname"
-            value={userDetails?.lastName}
-            readOnly
-            disabled
-          />
-        </div>
-        <div className="button">
-          <button className="editButton" onClick={handleUpdate}>
+        <div className="button-form">
+          <button className="edit-button" onClick={handleUpdate}>
             Save
           </button>
-          <button className="editButton" onClick={handleClose}>
+          <button className="edit-button" onClick={handleClose}>
             Cancel
           </button>
         </div>
