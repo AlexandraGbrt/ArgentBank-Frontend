@@ -1,25 +1,8 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Account from "../components/user/Account";
-import { useNavigate } from "react-router-dom";
-
-// REDUX
-import { useSelector } from "react-redux";
 import HeaderUser from "../components/user/HeaderUser";
 
 const User = () => {
-  const navigate = useNavigate();
-  const userDetails = useSelector((state) => state.user.userDetails);
-
-  useEffect(() => {
-    if (!userDetails) {
-      navigate("/login"); // Rediriger si l'utilisateur n'est pas authentifié après déconnexion
-    }
-  }, [userDetails, navigate]);
-
-  if (!userDetails) {
-    return null;
-  }
-
   return (
     <main className="main bg-dark">
       <HeaderUser />

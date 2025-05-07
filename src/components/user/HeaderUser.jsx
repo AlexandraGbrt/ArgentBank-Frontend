@@ -1,7 +1,7 @@
-// HEADER USER PAGE USER
-import React, { useEffect } from "react";
-import Button from "../Button";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Button from "../Button";
+import EditUser from "./EditUser";
 
 // REDUX
 import { useSelector } from "react-redux";
@@ -10,9 +10,11 @@ const HeaderUser = () => {
   const navigate = useNavigate();
   const userDetails = useSelector((state) => state.user.userDetails);
 
+  const [isEditing, setIsEditing] = useState(false); // Contrôle l'affichage du formulaire d'édition
+
   useEffect(() => {
     if (!userDetails) {
-      navigate("/login"); // Rediriger si l'utilisateur n'est pas authentifié après déconnexion
+      navigate("/"); // Rediriger le user après déconnexion
     }
   }, [userDetails, navigate]);
 
@@ -21,29 +23,31 @@ const HeaderUser = () => {
   }
 
   const handleEditName = () => {
-    const editUser = document.querySelector(".editUser");
-    const header = document.querySelector(".header");
-    editUser.style.display = "flex";
-    header.style.display = "none";
+    setIsEditing(true); // Afficher le formulaire d'édition
   };
 
   return (
     <>
-      <div className="header">
-        <h1>
-          Welcome back
-          <br />
-          {userDetails.firstName} {userDetails.lastName} !
-        </h1>
-        {/* <button class="edit-button">Edit Name</button> */}
-        <Button
-          className="edit-button"
-          onClick={handleEditName}
-          label="Edit Name"
-        />
-      </div>
+      {/* Si isEditing est false, afficher le HeaderUser */}
+      {!isEditing && (
+        <div className="header">
+          <h1>
+            Welcome back
+            <br />
+            {userDetails.firstName} {userDetails.lastName} !
+          </h1>
 
-      <h2 className="sr-only">Accounts</h2>
+          {/* Bouton pour déclencher l'édition */}
+          <Button
+            className="edit-button"
+            onClick={handleEditName}
+            label="Edit Name"
+          />
+        </div>
+      )}
+
+      {/* Si isEditing est true, afficher le formulaire EditUser */}
+      {isEditing && <EditUser setIsEditing={setIsEditing} />}
     </>
   );
 };

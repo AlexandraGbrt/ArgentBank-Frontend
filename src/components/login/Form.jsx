@@ -30,8 +30,7 @@ const Form = () => {
       if (loginUser.fulfilled.match(resultAction)) {
         localStorage.setItem("token", resultAction.payload.token); // Sauvegarder le token
 
-        await dispatch(getUserProfile()); // Charge les informations utilisateur
-
+        await dispatch(getUserProfile()); // Charge les informations utilisateur après connexion reussie
         navigate("/user"); // redirection
       } else {
         alert("Email or password incorrect");

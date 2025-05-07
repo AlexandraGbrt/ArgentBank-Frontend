@@ -1,14 +1,18 @@
-// Gestion état utilisateur : Statut de connexion
+// Gestion état utilisateur : Statut de connexion et gestion des données 
+// Met a jour le username
 
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+
+const API_URL = 'http://localhost:3001/api/v1/user';
+
 
 // CONNEXION 
 export const loginUser = createAsyncThunk('user/login', async ({ email, password }, thunkAPI) => {
 
     try {
         // Envoie les données avec les bons paramètres
-        const response = await axios.post('http://localhost:3001/api/v1/user/login', { email, password });
+        const response = await axios.post(`${API_URL}/login`, { email, password });
 
         return response.data.body; // recupération token
 
@@ -22,13 +26,14 @@ export const loginUser = createAsyncThunk('user/login', async ({ email, password
 export const getUserProfile = createAsyncThunk('user/getProfile', async (_, thunkAPI) => {
     const token = localStorage.getItem('token');
     try {
-        const response = await axios.get('http://localhost:3001/api/v1/user/profile', {
+        const response = await axios.get(`${API_URL}/profile`, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
         });
 
         return response.data.body;
+
     } catch (error) {
         console.error("Erreur lors de la récupération du profil :", error.response);
         return thunkAPI.rejectWithValue(error.response.data);
@@ -40,6 +45,7 @@ export const getUserProfile = createAsyncThunk('user/getProfile', async (_, thun
 const initialState = {
     isAuthenticated: false,
     userDetails: null, // On garde les informations de l'utilisateur ici
+    username: "", // récuperer le username pour la modification
     status: 'idle',
     error: null,
 };
@@ -52,7 +58,11 @@ const userSlice = createSlice({
         logout: (state) => {
             state.isAuthenticated = false;
             state.userDetails = null;
+            state.username = ""; // récupérer le username ???
             state.status = 'idle';
+        },
+        updateUsername: (state, action) => {
+            state.username = action.payload;
         },
     },
 
@@ -83,6 +93,7 @@ const userSlice = createSlice({
             .addCase(getUserProfile.fulfilled, (state, action) => {
                 state.loading = false;
                 state.userDetails = action.payload;  // Met à jour les infos utilisateur dans Redux
+                state.username = action.payload.userName; // action pour enregistrer le username après connexion reussie et récup info user
             })
             .addCase(getUserProfile.rejected, (state, action) => {
                 state.loading = false;
@@ -91,5 +102,5 @@ const userSlice = createSlice({
     },
 });
 
-export const { logout } = userSlice.actions;
+export const { logout, updateUsername } = userSlice.actions;
 export default userSlice.reducer;
