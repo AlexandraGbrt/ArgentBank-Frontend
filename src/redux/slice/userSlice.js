@@ -62,11 +62,11 @@ const userSlice = createSlice({
             state.status = 'idle';
         },
         updateUsername: (state, action) => {
-            state.username = action.payload;
+            state.userDetails.userName = action.payload; // Met à jour le username dans userdetails
         },
     },
 
-    // Définit les reducers asynchrones pour gérer les actions utilisateur
+    // reducers asynchrones pour gérer les actions utilisateur
     extraReducers: (builder) => {
         builder
             // Cas de loginUser

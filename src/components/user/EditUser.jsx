@@ -2,30 +2,33 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   updateUsernameAsync,
-  resetEditState,
+  resetEditForm,
 } from "../../redux/slice/editSlice";
+import { updateUsername } from "../../redux/slice/userSlice";
 
 const EditUser = ({ setIsEditing }) => {
   const dispatch = useDispatch();
-  const userDetails = useSelector((state) => state.user.userDetails); // Récuperer le nom et prénom pour l'afficher
-  const username = useSelector((state) => state.user.username); // récuperer le username pour l'afficher
+  const userDetails = useSelector((state) => state.user.userDetails); // Récuperer le nom et prénom et username pour les safficher
 
   const [newUsername, setNewUsername] = useState(""); // "" vide car useEffect ci dessous
+
   useEffect(() => {
-    if (username) {
-      setNewUsername(username);
+    if (userDetails.userName) {
+      // accédez à `userDetails.userName`
+      setNewUsername(userDetails.userName); // Mise à jour newUsername si le state change
     }
-  }, [username]); // Affichage username dans le champs
+  }, [userDetails]); // Affichage username dans le champs
 
   const handleUpdate = async () => {
     try {
       const resultAction = await dispatch(updateUsernameAsync({ newUsername }));
 
       if (updateUsernameAsync.fulfilled.match(resultAction)) {
+        dispatch(updateUsername(newUsername)); // action updateUsername
         setIsEditing(false); // Ferme le formulaire après succès
-        dispatch(resetEditState());
+        dispatch(resetEditForm());
       } else {
-        console.error("Erreur:", resultAction.payload); // Ligne 28 corrigée
+        console.error("Erreur:", resultAction.payload);
       }
     } catch (err) {
       console.error("Erreur inattendue:", err);
@@ -34,7 +37,7 @@ const EditUser = ({ setIsEditing }) => {
 
   const handleClose = () => {
     setIsEditing(false); // Ferme le formulaire d'édition : état `isEditing`false
-    setNewUsername(username); // Réinitialise le username précédent
+    setNewUsername(userDetails.userName); // Réinitialise le username précédent
   };
 
   return (

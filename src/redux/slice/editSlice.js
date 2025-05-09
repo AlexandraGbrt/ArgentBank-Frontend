@@ -28,10 +28,9 @@ export const updateUsernameAsync = createAsyncThunk('edit/updateUsername',
 
             // Met à jour le store principal après succès API
             dispatch(updateUsername(response.data.body.userName));
-
-            return response.data.body.username;
+            return response.data.body.userName;
         } catch (error) {
-            return rejectWithValue(error.response?.data || 'Erreur inconnue');
+            return rejectWithValue(error.response?.data || 'Erreur');
         }
     }
 );
@@ -43,7 +42,7 @@ const editSlice = createSlice({
         error: null,
     },
     reducers: {
-        resetEditState: (state) => {
+        resetEditForm: (state) => {
             state.status = 'idle';
             state.error = null;
         },
@@ -65,5 +64,5 @@ const editSlice = createSlice({
     },
 });
 
-export const { resetEditState } = editSlice.actions;
+export const { resetEditForm } = editSlice.actions;
 export default editSlice.reducer;
