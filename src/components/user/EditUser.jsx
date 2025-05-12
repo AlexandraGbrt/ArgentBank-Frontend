@@ -8,13 +8,13 @@ import { updateUsername } from "../../redux/slice/userSlice";
 
 const EditUser = ({ setIsEditing }) => {
   const dispatch = useDispatch();
-  const userDetails = useSelector((state) => state.user.userDetails); // Récuperer le nom et prénom et username pour les safficher
+  const userDetails = useSelector((state) => state.user.userDetails); // Récuperer le nom/prénom/username pour les afficher
 
   const [newUsername, setNewUsername] = useState(""); // "" vide car useEffect ci dessous
 
   useEffect(() => {
     if (userDetails.userName) {
-      // accédez à `userDetails.userName`
+      // accédez à userDetails.userName
       setNewUsername(userDetails.userName); // Mise à jour newUsername si le state change
     }
   }, [userDetails]); // Affichage username dans le champs

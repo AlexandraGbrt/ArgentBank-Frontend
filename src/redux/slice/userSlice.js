@@ -37,6 +37,7 @@ export const getUserProfile = createAsyncThunk('user/getProfile', async (_, thun
     } catch (error) {
         console.error("Erreur lors de la récupération du profil :", error.response);
         return thunkAPI.rejectWithValue(error.response.data);
+
     }
 });
 
@@ -44,8 +45,8 @@ export const getUserProfile = createAsyncThunk('user/getProfile', async (_, thun
 
 const initialState = {
     isAuthenticated: false,
-    userDetails: null, // On garde les informations de l'utilisateur ici
-    username: "", // récuperer le username pour la modification
+    userDetails: null, // On garde les info utilisateur ici
+    username: "", // récuperer le username pour la modif
     status: 'idle',
     error: null,
 };
@@ -94,6 +95,7 @@ const userSlice = createSlice({
                 state.loading = false;
                 state.userDetails = action.payload;  // Met à jour les infos utilisateur dans Redux
                 state.username = action.payload.userName; // action pour enregistrer le username après connexion reussie et récup info user
+                state.isAuthenticated = true;
             })
             .addCase(getUserProfile.rejected, (state, action) => {
                 state.loading = false;

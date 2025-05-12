@@ -14,7 +14,6 @@ function Account({ title, amount, description }) {
         <p className="account-amount-description">{description}</p>
       </div>
       <div className="account-content-wrapper cta">
-        {/* <button className="transaction-button">View transactions</button> */}
         <Button
           className="transaction-button"
           onClick={handleViewTransactions}

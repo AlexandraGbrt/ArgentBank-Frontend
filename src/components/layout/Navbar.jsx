@@ -12,7 +12,8 @@ const NavBar = () => {
   const userDetails = useSelector((state) => state.user.userDetails);
 
   const handleLogout = () => {
-    dispatch(logout()); // Déclencher la déconnexion
+    dispatch(logout()); // Déclenche la déconnexion
+    localStorage.removeItem("token");
     navigate("/login"); // Redirige vers la page login
   };
 

@@ -3,7 +3,7 @@ import { useNavigate } from "react-router";
 import Button from "../Button";
 
 // REDUX
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { loginUser, getUserProfile } from "../../redux/slice/userSlice";
 
 const Form = () => {
@@ -12,7 +12,6 @@ const Form = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const errorMsg = useSelector((state) => state.user.error); // afficher une erreur
 
   // clic sur le bouton
   const handleLogIn = async (e) => {
@@ -67,9 +66,6 @@ const Form = () => {
         <label htmlFor="remember-me">Remember me</label>
       </div>
       <Button className="sign-in-button" label="Sign In" />
-      {errorMsg && (
-        <p style={{ color: "red" }}>{errorMsg || "Erreur de connexion"}</p>
-      )}
     </form>
   );
 };
