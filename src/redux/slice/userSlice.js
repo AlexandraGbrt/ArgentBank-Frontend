@@ -6,7 +6,6 @@ import axios from 'axios';
 
 const API_URL = 'http://localhost:3001/api/v1/user';
 
-
 // CONNEXION 
 export const loginUser = createAsyncThunk('user/login', async ({ email, password }, thunkAPI) => {
 
@@ -42,12 +41,12 @@ export const getUserProfile = createAsyncThunk('user/getProfile', async (_, thun
 });
 
 
-
 const initialState = {
     isAuthenticated: false,
     userDetails: null, // On garde les info utilisateur ici
     username: "", // récuperer le username pour la modif
     status: 'idle',
+    // loading: false,
     error: null,
 };
 

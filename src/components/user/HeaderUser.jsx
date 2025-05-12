@@ -13,7 +13,10 @@ const HeaderUser = () => {
   const [isEditing, setIsEditing] = useState(false); // Contrôle l'affichage du formulaire d'édition
 
   useEffect(() => {
-    if (!userDetails) {
+    const token = localStorage.getItem("token");
+
+    if (!token) {
+      // 'token' et non 'userdetails'
       navigate("/"); // Rediriger le user après déconnexion
     }
   }, [userDetails, navigate]);
